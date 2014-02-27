@@ -1,0 +1,57 @@
+body {
+    background: #ECF0F1;
+    font-family: 'Open Sans', 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑, STHeiti, 'WenQuanYi Micro Hei', SimSun, Arial, sans-serif;
+}
+
+.suggest-container {
+    margin: 100px auto 0;
+    width: 50%;
+}
+
+.suggest-container input {
+    width: 100%;
+    font-family: 'Open Sans', 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑, STHeiti, 'WenQuanYi Micro Hei', SimSun, Arial, sans-serif;
+    color: #34495e;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 36px;
+    padding: 0.5rem;
+}
+
+.suggest-container input::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #34495e;
+}
+.suggest-container input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #34495e;
+}
+.suggest-container input::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #34495e;
+}
+.suggest-container input:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #34495e;
+}
+
+.suggest-input {
+    background: #1abc9c;
+}
+
+.dropdown-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: #2c3e50;
+}
+
+.dropdown-menu li a {
+    outline: none;
+    display: block;
+    padding: 1rem;
+    color: #1abc9c;
+    text-decoration: none;
+}
+
+.dropdown-menu li a.focus, .dropdown-menu li a:hover {
+    background: #34495E;
+    color: #fff;
+}

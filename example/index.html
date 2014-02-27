@@ -1,0 +1,83 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../source/style.css">
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+  </head>
+  <body>
+    <div class="suggest-container">
+      <div class="suggest-input">
+        <input id="stock" type="text" data-keyup="fetchData" autocomplete="off" placeholder="股票代码或拼音首字母" />
+      </div>
+    </div>
+    <script src="../source/main.js"></script>
+    <script>
+    var suggest = AutoSuggest({
+      // 容器的 id 或 class
+      container: '.suggest-container',
+      // 输入框的 id 或 class 或 jQuery object
+      id: 'stock',
+      // 输入几个字符的时候触发请求
+      minInputLen: 2,
+      // 列表一次显示的最大条目数
+      row: 10,
+      // 请求的地址，{%input%} 是用户输入的字符
+      url: 'http://suggest3.sinajs.cn/suggest/?name=info&key={%input%}',
+      // 请求的方式，对应 jQuery 的 script 或 json
+      dataType: 'script',
+      // 用户选中一个列表项时进行的操作，如：进行搜索
+      pick: function(value) {
+        alert('你选择了' + value);
+      },
+      // 获取到数据后对数据进行过滤及格式化处理
+      processData: function(inputValue, data) {
+        if(window.info) {
+          var result = [];
+          var stock_arry;
+          data = window.info.split(';');
+          data.forEach(function(stock){
+            stock_arr = stock.split(',');
+            if(inputValue.match(/\d+/) !== null) {
+              match = stock_arr[2];
+            } else {
+              match = stock_arr[0];
+            }
+            result.push({
+              'display': match.replace(inputValue, '<strong>' + inputValue + '</strong>') + ', ' + stock_arr[4],
+              'value': stock_arr[4] + '(' + stock_arr[2] + ')'
+            });      
+          });
+          return result;
+        }
+      }
+      // processData: function(data, inputValue) {
+      //   if(typeof data == 'string') {
+      //     data = JSON.parse(data);
+      //   }
+      //   var match  = '';
+      //   var result = [];
+      //   data.forEach(function(stock){
+      //     if(inputValue.match(/\d+/) !== null) {
+      //       match = stock[2];
+      //     } else {
+      //       match = stock[0];
+      //     }
+      //     result.push({
+      //       'display': match.replace(inputValue, '<strong>' + inputValue + '</strong>') + ', ' + stock[4],
+      //       'value': stock[4] + '(' + stock[2] + ')'
+      //     });
+      //   });
+      //   return result;
+      // }
+    });
+    </script>
+  </body>
+</html>
