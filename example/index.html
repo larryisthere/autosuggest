@@ -58,21 +58,23 @@
           return result;
         }
       }
-      // processData: function(data, inputValue) {
-      //   if(typeof data == 'string') {
+      /**
+       * 获取到数据后对数据进行过滤及格式化处理
+       * @param {string} inputValue 用户当前输入的字符串
+       * @param {string|json} data 服务器返回的数据
+       * @return {array} 处理后的传回组件用于显示的数据。数组中可以为 string 或 json。
+       *                 若为 json，display 为显示的值；param 为数据库返回的值, menuitem 为构成菜单的 html 代码。
+       */
+      // processData: function(inputValue, data) {
+      //   if (typeof data == 'string') {
       //     data = JSON.parse(data);
       //   }
-      //   var match  = '';
       //   var result = [];
-      //   data.forEach(function(stock){
-      //     if(inputValue.match(/\d+/) !== null) {
-      //       match = stock[2];
-      //     } else {
-      //       match = stock[0];
-      //     }
+      //   data.forEach(function(item) {
       //     result.push({
-      //       'display': match.replace(inputValue, '<strong>' + inputValue + '</strong>') + ', ' + stock[4],
-      //       'value': stock[4] + '(' + stock[2] + ')'
+      //       'menuitem': item['charter'] + '. ' + item['word'].replace(inputValue, '<strong>' + inputValue + '</strong>'),
+      //       'display': item['word'],
+      //       'param': JSON.stringify(item)
       //     });
       //   });
       //   return result;

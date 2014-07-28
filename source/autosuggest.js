@@ -23,16 +23,18 @@ var AutoSuggest = function(options){
     prepareSuggestMenu();
     var snippet = [];
     var display;
-    var value;
+    var param;
+    var menuitem;
     data.forEach(function(item){
-      if(typeof item == 'object') {
+      if((typeof item).toLowerCase() == 'object') {
         display = item.display;
-        value   = item.value;
+        param   = item.param;
+        menuitem   = item.menuitem;
       } else {
         display = item;
-        value   = item;
+        param   = item;
       }
-      snippet.push('<li><a data-keydown="walkSuggestMenu" data-action="pickItem" data-param="' + value + '" href="#">' + display + '</a></li>');
+      snippet.push('<li><a data-keydown="walkSuggestMenu" data-action="pickItem" data-display="' + display + '" href="#" data-param="' + escape(param ? param : '') + '">' + menuitem + '</a></li>');
     });
     var snippetHtml = snippet.join('');
     container.children('.dropdown-menu').append($(snippetHtml));
@@ -72,10 +74,10 @@ var AutoSuggest = function(options){
       if(keyCode == KEYCODE.ARROWUP || keyCode == KEYCODE.ARROWDOWN) {
         var itemValue;
         if(keyCode == KEYCODE.ARROWUP) {
-          itemValue = container.find('.dropdown-menu').length && container.find('.dropdown-menu a:last').addClass('focus').focus().data('param') || '';
+          itemValue = container.find('.dropdown-menu').length && container.find('.dropdown-menu a:last').addClass('focus').focus().data('display') || '';
         }
         if(keyCode == KEYCODE.ARROWDOWN) {
-          itemValue = container.find('.dropdown-menu').length && container.find('.dropdown-menu a:first').addClass('focus').focus().data('param') || '';
+          itemValue = container.find('.dropdown-menu').length && container.find('.dropdown-menu a:first').addClass('focus').focus().data('display') || '';
         }
         if(itemValue) $el.val(itemValue);
         return false;
@@ -93,7 +95,7 @@ var AutoSuggest = function(options){
       } else {
         $el.attr('former-value', elementValue);
       }
-      
+      console.log( elementValue );
       if( elementValue.length > opt.minInputLen) {
         if(opt.dataType == 'script' || opt.dataType == 'json') {
           url = opt.url.replace('{%input%}', elementValue);
@@ -138,7 +140,7 @@ var AutoSuggest = function(options){
         }
         $($menuItems[index]).removeClass('focus');
         $($menuItems[newIndex]).addClass('focus').focus();
-        element.val($($menuItems[newIndex]).data('param'));
+        element.val($($menuItems[newIndex]).data('display'));
       }
       return false;
     },
@@ -148,7 +150,7 @@ var AutoSuggest = function(options){
       $(obj).parent().addClass('active');
       setTimeout(function(){
         removeSuggestMenu(obj);
-        element.val(param).data('picked', '1');
+        element.val($(obj).data('display')).data('picked', '1');
         $ele.focus();
         if(typeof opt.pick == 'function') {
           opt.pick(param);
